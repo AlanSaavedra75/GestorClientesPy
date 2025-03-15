@@ -1,0 +1,34 @@
+name: CI/CD Gestor Clientes Py
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+
+      - name: Instalar dependencias
+        run: pip install fastapi uvicorn
+
+      - name: Ejecutar pruebas
+        run: echo "Pruebas automatizadas aquí"
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Desplegar en AWS (simulado)
+        run: echo "Desplegando aplicación en AWS..."
