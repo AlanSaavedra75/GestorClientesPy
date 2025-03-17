@@ -1,0 +1,68 @@
+name: Client Management Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  create-client:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+
+      - name: Create a new client
+        run: |
+          python app.py create --name "Nuevo Cliente" --email "cliente@example.com" --phone "1234567890"
+
+  modify-client:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+
+      - name: Modify an existing client
+        run: |
+          python app.py modify --id "1" --name "Cliente Modificado" --email "modificado@example.com" --phone "0987654321"
+
+  request-improvement:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Log improvement request
+        run: |
+          echo "Mejora solicitada: Optimización de la base de datos" >> improvement_log.txt
+          git add improvement_log.txt
+          git commit -m "Solicitud de mejora"
+          git push origin main
+
+  request-new-feature:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Log new feature request
+        run: |
+          echo "Nueva función solicitada: API para consulta de clientes" >> feature_requests.txt
+          git add feature_requests.txt
+          git commit -m "Solicitud de nueva función"
+          git push origin main
